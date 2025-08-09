@@ -1,9 +1,13 @@
--- GopaHub Loading Screen с блюром и блокировкой нажатий
+-- GopaHub Loading Screen с блюром, блокировкой кликов и скрытием Roblox UI
 local Lighting = game:GetService("Lighting")
+local StarterGui = game:GetService("StarterGui")
+
+-- Отключаем стандартный Roblox UI
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
 
 -- Эффект размытия
 local blur = Instance.new("BlurEffect")
-blur.Size = 20 -- сила размытия
+blur.Size = 20
 blur.Parent = Lighting
 
 -- GUI
@@ -17,7 +21,7 @@ screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 local blocker = Instance.new("Frame")
 blocker.Size = UDim2.new(1, 0, 1, 0)
 blocker.Position = UDim2.new(0, 0, 0, 0)
-blocker.BackgroundTransparency = 1 -- прозрачный, но активный
+blocker.BackgroundTransparency = 1
 blocker.Active = true
 blocker.ZIndex = 10
 blocker.Parent = screenGui
@@ -81,6 +85,9 @@ for i = 1, 100 do
 	progressText.Text = "Loading... " .. i .. "%"
 	wait(stepTime)
 end
+
+-- Возвращаем Roblox UI
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 
 -- Убираем блокировку, блюр и экран
 blur:Destroy()
